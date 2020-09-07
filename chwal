@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+wal -c
+wget $1 -O $HOME/.wallpaper
+wal -l -i $HOME/.wallpaper

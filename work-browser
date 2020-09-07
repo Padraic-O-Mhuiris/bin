@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+CMD="firefox --profile $HOME/.mozilla/firefox/yotmd48j.Work"
+exec $CMD

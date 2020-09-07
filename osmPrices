@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+
+#NETWORKS=("mainnet" "kovan" "rinkeby" "ropsten" "goerli" "testnet")
+NETWORKS=("mainnet")
+
+ETH_ADDR=(
+    "0x81fe72b5a8d1a857d176c3e7d5bd2679a9b85763"
+)
+
+BAT_ADDR=(
+    "0xb4eb54af9cc7882df0121d26c5b97e802915abe6"
+)
+
+USDC_ADDR=(
+    "0x77b68899b99b686F415d074278a9a16b336085A0"
+)
+
+function call {
+    RET=$(seth storage $1 $2 --rpc-url=$3)
+    DEC=$(seth --to-dec ${RET:34})
+    LEN=${#DEC}
+    IDX="$(($LEN - 18))"
+    echo "${DEC::$IDX}.${DEC:$IDX:$LEN}"
+}
+
+function callCurrentPrice {
+    echo $4
+
+    case $4 in
+        "USDC")
+            call $1 2 $2
+            ;;
+        *)
+            call $1 3 $2
+            ;;
+    esac
+}
+
+function printPrices {
+    NET=${NETWORKS[$1]}
+    ENDPOINT="https://$NET.infura.io/v3/beabcde3dcb04fb0838ff6b3a1af9805"
+
+    callCurrentPrice ${ETH_ADDR[$1]} $ENDPOINT $NET "ETH"
+    callCurrentPrice ${BAT_ADDR[$1]} $ENDPOINT $NET "BAT"
+    callCurrentPrice ${USDC_ADDR[$1]} $ENDPOINT $NET "USDC"
+}
+
+for idx in "${!NETWORKS[@]}"; do printPrices $idx; done

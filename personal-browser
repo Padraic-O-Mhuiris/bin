@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+CMD="firefox --profile $HOME/.mozilla/firefox/a48zz7qs.default-release"
+exec $CMD
