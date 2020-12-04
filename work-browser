@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-CMD="firefox --profile $HOME/.mozilla/firefox/yotmd48j.Work"
+CMD="google-chrome-stable --profile-directory=Work"
 exec $CMD
